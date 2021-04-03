@@ -55,7 +55,7 @@ const HomeHeader = () => {
                     <div style={{width: '50vw'}}>
                         <p style={{textAlign: 'center', color: 'white', fontSize: '20px', fontWeight: '300'}}>
                         Que vous soyez dresseur, dresseuse, fan de longue date ou tout simplement amateur de pokémon,
-                        pokÉdex est fait pour vous. Accédez à la plus fun et la plus grande encyclopédie pokémon jamais réalisée.
+                        pokÉdex est fait pour vous. Accédez à la plus fun et à la plus grande encyclopédie pokémon jamais réalisée.
                         </p>
                     </div>
                     <div style={{display: 'flex', width: '520px', justifyContent: 'space-between', padding: '40px 0'}}>

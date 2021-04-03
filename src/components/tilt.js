@@ -1,6 +1,6 @@
 import * as React from 'react'
 import VanillaTilt from 'vanilla-tilt'
-
+import pokeball from '../image/pokeballcard.png'
 
 const options = {
     scale: 1.2,
@@ -28,10 +28,13 @@ const Tilt = ({options, p_id, color}) => {
                 borderRadius: '50%', display: 'grid', placeItems: 'center',
                 backgroundColor: 'white', zIndex:'0'
                 }}>
-
+                    <img src={pokeball} width="200px" height="200px"
+                        style={{borderRadius: "50%"}}
+                        alt="pokeball"
+                    />
                 </div>
                 <img src={`https://pokeres.bastionbot.org/images/pokemon/${p_id}.png`} alt="img" width="170px"
-                height="270px" 
+                    height="270px" 
                     style={{
                     // boxShadow: '1px 4px 16px rgb(0, 0, 0, 0.5)',
                     borderRadius: '12px',

@@ -3,12 +3,12 @@ import Tilt from './tilt'
 import blob from '../image/blobinfo.svg'
 // import vector from '../image/Vector.svg'
 import blobbottom from '../image/blobbottom.svg'
-
+import styled from 'styled-components'
 
 const InfoSection = ({options}) => {
     return (
         <div style={{
-            height: '70vh', width: '100vw',
+            height: '100%', width: '100vw',
             display: 'grid', placeItems:'center',
             // backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -28,7 +28,10 @@ const InfoSection = ({options}) => {
             <div style={{width: '100vw', display: 'grid', placeItems: 'center',
                 backgroundColor: '#F6F6F6', paddingBottom: '35px'
                 }}>
-                <h1 style={{fontSize: '35px', padding: '40px 0'}}>Essayer de les capturer tous</h1>
+                <Heading>Capturez les tous</Heading>
+                <p style={{marginBottom: '40px', fontSize: "20px"}}>
+                    Montrez à vos adversaires que vous êtes le meilleur dresseur.
+                </p>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Tilt options={options} p_id="9" color="wheat" />
                     <Tilt options={options} p_id="149" color="cadetblue" />
@@ -48,5 +51,14 @@ const InfoSection = ({options}) => {
         </div>
     )
 }
+
+const Heading = styled.h1`
+  background: linear-gradient(to bottom right,#b13cff,#fd9d52);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: '45px';
+  padding: '40px 0';
+
+`
 
 export default InfoSection
