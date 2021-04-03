@@ -5,11 +5,13 @@ import styled from 'styled-components'
 
 const Foot = () => {
     return (
-        <div style={{width: "100%", height: "40vh", backgroundColor: 'black',
-        padding: '30px', paddingBottom: "0", display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
-        }}>
-            <ul style={{display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
-                <li style={{position: 'absolute', left: '150px'}}>
+        <div style={{height: "40vh", backgroundColor: 'black',
+            padding: '50px 80px', paddingBottom: "0", display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            
+        }}
+        >
+            <ul style={{display: 'flex', position: 'relative', justifyContent: 'space-between', position: 'relative', padding: '0'}}>
+                <li style={{position: 'absolute', left: '0', top: '-40px'}}>
                     <Link to="/">
                         <img src={pokeballcard} width="30px" height="30px"/>
                     </Link>
