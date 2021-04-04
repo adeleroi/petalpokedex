@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useContextMenu } from './searchcontext'
 import Tilt from './tilt'
+import {HiOutlineChevronLeft, HiOutlineChevronRight} from 'react-icons/hi'
 
 
 const Pokedex = () => {
@@ -8,7 +9,8 @@ const Pokedex = () => {
     return (
         <div style={{ position:'relative'}}>
             <SearchMenu />
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', position: 'relative'}}>
+                <PokedexNav scrollBehavior />
                 {
                     arr.map(v => {
                     return (
@@ -21,6 +23,7 @@ const Pokedex = () => {
     )
 }
 
+
 const SearchMenu = () => {
     const [isOpen, setIsOpen] = useContextMenu()
     return (
@@ -28,7 +31,7 @@ const SearchMenu = () => {
         {isOpen && (
             <>
             <div style={{height: '100%', width: '100vw',
-                backgroundColor: 'rgb(0, 0, 0, .4)',position: 'absolute', top: '0',
+                backgroundColor: 'rgb(0, 0, 0, .4)',position: 'absolute', top: '-9px',
                 zIndex: '2'
                 }}
                 onClick={() => setIsOpen(false)}
@@ -37,7 +40,7 @@ const SearchMenu = () => {
             <div style={{height: '80vh', width: '80vw', backgroundColor: 'white',
                 position: 'absolute', left: '50%', transform: 'translateX(-50%)',
                 borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px',
-                padding: '0 50px',  zIndex: '3', top: '0'
+                padding: '0 50px',  zIndex: '3', top: '0', borderRadius: '15px'
                 }}
             >
                 <Suggestion pk_id={3} SuggestionType="Form" pokemonCategorie="Ball" />
@@ -84,13 +87,45 @@ const Suggestion = ({pk_id, SuggestionType, pokemonCategorie}) => {
 }
 
 
-const Card = () => {
+const PokedexNav = ({navLeft, scrollBehavior, navRight}) => {
+    const [offset, setOffset] = React.useState(0)
+    React.useEffect(() => {
+        if(!scrollBehavior){
+            return 
+        }
+        window.onscroll = () => {
+            setOffset(window.pageYOffset)
+        }
+    })
+    console.log(offset)
+    const style = offset ? (
+        {position: 'fixed', top:'80px', width: '100%'}
+     ) : (
+         {position: 'fixed', top:'80px'}
+     )
+    const navCircleStyle = !offset ? {backgroundImage: 'none'} : {backgroundImage: 'linear-gradient(to bottom right, #b13cff,#fd9d52)'}
     return (
-        <>
-
-        </>
+        <div style={style}>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{width: '55px', height: '55px', borderRadius: '50%',
+                    display:'grid', placeItems: 'center',
+                    boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
+                    margin:'10px 10px', cursor: 'pointer', ...navCircleStyle
+                    }}
+                >
+                    <HiOutlineChevronLeft style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
+                </div>
+                <div style={{width: '55px', height: '55px', borderRadius: '50%',
+                    display:'grid', placeItems: 'center',
+                    boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
+                    margin:'10px 10px', cursor: 'pointer', ...navCircleStyle
+                    }}
+                >
+                    <HiOutlineChevronRight style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
+                </div>
+            </div>
+        </div>
     )
 }
-
 
 export default Pokedex

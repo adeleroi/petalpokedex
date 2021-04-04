@@ -10,11 +10,8 @@ const InfoSection = ({options}) => {
         <div style={{
             height: '100%', width: '100vw',
             display: 'grid', placeItems:'center',
-            // backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            // backgroundColor: '#E3E2E2'
             }}
-
         >
             <div style={{
                 width: '100vw',
@@ -23,20 +20,19 @@ const InfoSection = ({options}) => {
                 backgroundRepeat: 'no-repeat'
                 }}
             >
-
             </div>
             <div style={{width: '100vw', display: 'grid', placeItems: 'center',
                 backgroundColor: '#F6F6F6', paddingBottom: '35px'
                 }}>
-                <Heading>Capturez les tous</Heading>
+                <Heading>Retrouvez les tous</Heading>
                 <p style={{marginBottom: '40px', fontSize: "20px"}}>
-                    Montrez à vos adversaires que vous êtes le meilleur des dresseurs.
+                    Visitez notre collection unique de pokémons rares.
                 </p>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Tilt options={options} move p_id="9" color="wheat" />
                     <Tilt options={options} move p_id="149" color="cadetblue" />
                     <Tilt options={options} move p_id="131" color="cornflowerblue" />
-                    <Tilt options={options} move p_id="151" color="black" />
+                    <Tilt options={options} move p_id="151" color="orange" />
                 </div>
             </div>
             <div style={{
@@ -46,7 +42,6 @@ const InfoSection = ({options}) => {
                 backgroundRepeat: 'no-repeat'
                 }}
             >
-
             </div>
         </div>
     )
