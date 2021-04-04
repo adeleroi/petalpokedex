@@ -30,13 +30,13 @@ const InfoSection = ({options}) => {
                 }}>
                 <Heading>Capturez les tous</Heading>
                 <p style={{marginBottom: '40px', fontSize: "20px"}}>
-                    Montrez à vos adversaires que vous êtes le meilleur dresseur.
+                    Montrez à vos adversaires que vous êtes le meilleur des dresseurs.
                 </p>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Tilt options={options} p_id="9" color="wheat" />
-                    <Tilt options={options} p_id="149" color="cadetblue" />
-                    <Tilt options={options} p_id="131" color="cornflowerblue" />
-                    <Tilt options={options} p_id="151" color="black" />
+                    <Tilt options={options} move p_id="9" color="wheat" />
+                    <Tilt options={options} move p_id="149" color="cadetblue" />
+                    <Tilt options={options} move p_id="131" color="cornflowerblue" />
+                    <Tilt options={options} move p_id="151" color="black" />
                 </div>
             </div>
             <div style={{

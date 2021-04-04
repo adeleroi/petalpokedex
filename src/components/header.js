@@ -8,7 +8,7 @@ const HomeHeader = () => {
     return (
         <header>
             <Hero>
-                <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 100px'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 100px'}} id='haut'>
                     <nav style={{display: 'flex', justifyContent: 'space-between', width: '100%', height: '80px', alignItems: 'center'}}>
                         <Link to="/">
                             <img alt="logo"

@@ -12,16 +12,16 @@ const Foot = () => {
         >
             <ul style={{display: 'flex', position: 'relative', justifyContent: 'space-between', position: 'relative', padding: '0'}}>
                 <li style={{position: 'absolute', left: '0', top: '-40px'}}>
-                    <Link to="/">
+                    <a href="#haut">
                         <img src={pokeballcard} width="30px" height="30px"/>
-                    </Link>
+                    </a>
                 </li>
-                <li style={{display: 'grid', placeItems: 'center'}}>
+                <li>
                     <h3 style={{color: 'white'}}>Compagnie</h3>
                     <List>
-                        <li style={{color: 'white', listStyle: 'none'}}>PetalMD</li>
-                        <li style={{color: 'white', listStyle: 'none'}}>PetalMD</li>
-                        <li style={{color: 'white', listStyle: 'none'}}>PetalMD</li>
+                        <li style={{color: 'white', listStyle: 'none'}}>À propos</li>
+                        <li style={{color: 'white', listStyle: 'none'}}>Carriere</li>
+                        <li style={{color: 'white', listStyle: 'none'}}>Pourquoi PokÉdex?</li>
                         <li style={{color: 'white', listStyle: 'none'}}>PetalMD</li>
                     </List>
                 </li>
@@ -122,7 +122,7 @@ const Foot = () => {
                 </li>
             </ul>
             <div style={{width: '100%', borderTop: '1px solid white', paddingTop: '10px', paddingBottom: '10px'}}>
-                <span style={{color: 'white'}}>Copyright {new Date().getFullYear()} PokEdex</span>
+                <span style={{color: 'white'}}>Copyright &copy;	{new Date().getFullYear()}, PokÉdex. Tous droits réservés</span>
             </div>
         </div>
     )

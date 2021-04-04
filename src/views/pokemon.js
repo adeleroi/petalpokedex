@@ -1,8 +1,10 @@
 import * as React from 'react'
 
+
 const Pokemon = () => {
     return (
-        <></>
+        <div>
+        </div>
     )
 }
 

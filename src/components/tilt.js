@@ -9,9 +9,12 @@ const options = {
 }
 
 // https://i.imgur.com/CKl3eLr.jpg
-const Tilt = ({options, p_id, color}) => {
+const Tilt = ({options, move, p_id, color}) => {
     const el = React.useRef()
     React.useEffect(() => {
+        if(!move){
+            return
+        }
         VanillaTilt.init(el.current, options)
     }, [options])
     return (
@@ -36,7 +39,6 @@ const Tilt = ({options, p_id, color}) => {
                 <img src={`https://pokeres.bastionbot.org/images/pokemon/${p_id}.png`} alt="img" width="170px"
                     height="270px" 
                     style={{
-                    // boxShadow: '1px 4px 16px rgb(0, 0, 0, 0.5)',
                     borderRadius: '12px',
                     position: 'absolute', top: '55px'}}
                 />

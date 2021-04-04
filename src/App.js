@@ -4,22 +4,24 @@ import Home from './views/home'
 import Pokemon from './views/pokemon'
 import PokemonList from './views/pokemonlist'
 
+import {
+  Menu,
+  MenuContent,
+  MenuOpen,
+  useContextMenu
+} from './components/searchcontext'
 
 function App() {
   return (
     <div className="App">
       <Router>
+      <Menu>
         <Switch>
-          <Route exact>
-            <Home/>
-          </Route>
-          <Route path="/pokemonlist">
-            <PokemonList/>
-          </Route>
-          <Route path="/pokemon/:id">
-            <Pokemon />
-          </Route>
+          <Route path="/" exact component={Home}/>
+          <Route path="/pokemonlist" component={PokemonList}/>
+          <Route path="/pokemon/:id" component={Pokemon}/>
         </Switch>
+        </Menu>
       </Router>
     </div>
   );
