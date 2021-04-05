@@ -4,18 +4,22 @@ import Tilt from './tilt'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from 'react-icons/hi'
 
 
-const Pokedex = () => {
-    const arr = Array.from({length: 49}, (i, v)=> v+1)
+const Pokedex = ({pokemonType, number, ...rest}) => {
+    const arr = Array.from({length: number}, (i, v)=> v+1)
+    const captures = Array.from({length: 5}, (i, v) => v + 1)
     return (
-        <div style={{ position:'relative'}}>
+        <div style={{ position:'relative', height: '100%', marginBottom: '20vh'}}>
             <SearchMenu />
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', position: 'relative'}}>
-                <PokedexNav scrollBehavior />
+                <PokedexNav scrollBehavior {...rest}/>
                 {
                     arr.map(v => {
-                    return (
-                            <Tilt p_id={v} color="cadetblue" key={v}/>
-                    )
+                        if(captures.includes(v)){
+                            return <Tilt p_id={v} color="cadetblue" key={v} capt/>
+                        }
+                        return (
+                                <Tilt p_id={v} color="cadetblue" key={v}/>
+                        )
                     })
                 }
             </div>
@@ -87,7 +91,7 @@ const Suggestion = ({pk_id, SuggestionType, pokemonCategorie}) => {
 }
 
 
-const PokedexNav = ({navLeft, scrollBehavior, navRight}) => {
+const PokedexNav = ({navLeft, scrollBehavior, navRight, navOff}) => {
     const [offset, setOffset] = React.useState(0)
     React.useEffect(() => {
         if(!scrollBehavior){
@@ -104,6 +108,10 @@ const PokedexNav = ({navLeft, scrollBehavior, navRight}) => {
          {position: 'fixed', top:'80px'}
      )
     const navCircleStyle = !offset ? {backgroundImage: 'none'} : {backgroundImage: 'linear-gradient(to bottom right, #b13cff,#fd9d52)'}
+    
+    if(navOff){
+        return null
+    }
     return (
         <div style={style}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>

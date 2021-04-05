@@ -6,9 +6,6 @@ import PokemonList from './views/pokemonlist'
 
 import {
   Menu,
-  MenuContent,
-  MenuOpen,
-  useContextMenu
 } from './components/searchcontext'
 
 function App() {

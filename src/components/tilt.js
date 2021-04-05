@@ -9,14 +9,14 @@ import {Link} from 'react-router-dom'
 //     max: 30
 // }
 
-const Tilt = ({options, move, p_id, color}) => {
+const Tilt = ({options, move, p_id, color, capt}) => {
     const el = React.useRef()
     React.useEffect(() => {
         if(!move){
             return
         }
         VanillaTilt.init(el.current, options)
-    }, [options])
+    }, [options, move])
     return (
         <div ref={el} style={{margin: '0 10px'}}>
             <Link to="pokemon/1" style={{color: 'inherit', textDecoration: 'none'}}>
@@ -26,7 +26,7 @@ const Tilt = ({options, move, p_id, color}) => {
             >
                     <div style={{width: '150px', height: '150px',
                         borderRadius: '50%', display: 'grid', placeItems: 'center',
-                        backgroundColor: 'white', backgroundImage:`url(${pokeball})`,
+                        backgroundColor: 'white', backgroundImage: capt ? `url(${pokeball})`: 'none',
                         backgroundSize: 'cover'
                         }}
                     >
@@ -39,6 +39,7 @@ const Tilt = ({options, move, p_id, color}) => {
                             </h3>
                             <p style={{margin:"0"}}>Type: Dragon</p>
                             <p style={{margin:"0", width: '100%'}}>Evolution: Dracofeu</p>
+                            {/* {capt && (<p>Capture</p>)} */}
                     </div>
             </div>
             </Link>

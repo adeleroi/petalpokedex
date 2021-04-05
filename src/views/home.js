@@ -9,7 +9,6 @@ const Home = () => {
     return (
         <>
             <HomeHeader/>
-            {/* <Tilt options={{scale: 1.2, speed: 300, max: 30}}/> */}
             <InfoSection options={{scale: 1, speed: 0, max: 30}}/>
             <Foot/>
         </>
