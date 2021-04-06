@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { useContextMenu } from './searchcontext'
+import { useContextSearch } from './searchcontext'
 import Tilt from './tilt'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from 'react-icons/hi'
+import styled from 'styled-components'
 
 
 const Pokedex = ({pokemonType, number, ...rest}) => {
     const arr = Array.from({length: number}, (i, v)=> v+1)
     const captures = Array.from({length: 5}, (i, v) => v + 1)
     return (
-        <div style={{ position:'relative', height: '100%', marginBottom: '20vh'}}>
-            <SearchMenu />
+        <div style={{ position:'relative', height: '100%', margin: '20vh 0',}}>
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', position: 'relative'}}>
                 <PokedexNav scrollBehavior {...rest}/>
                 {
@@ -28,28 +28,17 @@ const Pokedex = ({pokemonType, number, ...rest}) => {
 }
 
 
-const SearchMenu = () => {
-    const [isOpen, setIsOpen] = useContextMenu()
+export const SearchMenu = () => {
+    const [isOpen, setIsOpen] = useContextSearch()
     return (
         <>
         {isOpen && (
             <>
-            <div style={{height: '100%', width: '100vw',
-                backgroundColor: 'rgb(0, 0, 0, .4)',position: 'absolute', top: '-9px',
-                zIndex: '2'
-                }}
-                onClick={() => setIsOpen(false)}
-                >
-            </div>
-            <div style={{height: '80vh', width: '80vw', backgroundColor: 'white',
-                position: 'absolute', left: '50%', transform: 'translateX(-50%)',
-                borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px',
-                padding: '0 50px',  zIndex: '3', top: '0', borderRadius: '15px'
-                }}
-            >
+            <DissmissSearch onClick={() => setIsOpen(false)}></DissmissSearch>
+            <FilterPanel>
                 <Suggestion pk_id={3} SuggestionType="Form" pokemonCategorie="Ball" />
                 <Suggestion pk_id={2} SuggestionType="Egg group" pokemonCategorie="Dragon" />
-            </div>
+            </FilterPanel>
         </>
         )
         }
@@ -57,14 +46,33 @@ const SearchMenu = () => {
     )
 }
 
+const DissmissSearch = styled.div(props => (
+    {
+        height: '100vh',
+        width: '100vw',
+        backgroundColor: 'rgb(0, 0, 0, .6)',
+        position: 'absolute',
+        top: '65px',
+        zIndex: '2',
+        left: '49%',
+        transform: 'translateX(-50%)'
+    }
+))
+
+const FilterPanel = styled.div(props => (
+    {
+        height: '90vh', width: '70vw', backgroundColor: 'white',
+        position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+        borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px',
+        padding: '0 50px',  zIndex: '3', top: '64px'
+    }
+))
 
 const Suggestion = ({pk_id, SuggestionType, pokemonCategorie}) => {
     return (
-        <>
         <div>
             <h3>{SuggestionType}</h3>
             <div style={{display: 'flex'}}>
-            {
                 <div style={{width: '150px', height: '100px', borderRadius: '15px',
                     position: 'relative',
                     margin: '0 20px'
@@ -77,16 +85,13 @@ const Suggestion = ({pk_id, SuggestionType, pokemonCategorie}) => {
                         }}
                     >
                     <h3>{pokemonCategorie}</h3>
-
                     </div>
                     <img src={`https://pokeres.bastionbot.org/images/pokemon/${pk_id}.png`}
                         alt={`${pokemonCategorie}-${pk_id}`} width="150px" height="100px"
                     />
                 </div>
-            }
             </div>
         </div>
-        </>
     )
 }
 
@@ -101,13 +106,16 @@ const PokedexNav = ({navLeft, scrollBehavior, navRight, navOff}) => {
             setOffset(window.pageYOffset)
         }
     })
-    console.log(offset)
     const style = offset ? (
-        {position: 'fixed', top:'80px', width: '100%'}
-     ) : (
-         {position: 'fixed', top:'80px'}
-     )
-    const navCircleStyle = !offset ? {backgroundImage: 'none'} : {backgroundImage: 'linear-gradient(to bottom right, #b13cff,#fd9d52)'}
+            {position: 'fixed', top:'80px', width: '100%'}
+        ) : (
+            {position: 'fixed', top:'80px'}
+        )
+    const navCircleStyle = !offset ? (
+            {backgroundImage: 'none'}
+        ) : (
+            {backgroundImage: 'linear-gradient(to bottom right, #b13cff,#fd9d52)'}
+        )
     
     if(navOff){
         return null
@@ -115,25 +123,28 @@ const PokedexNav = ({navLeft, scrollBehavior, navRight, navOff}) => {
     return (
         <div style={style}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <div style={{width: '55px', height: '55px', borderRadius: '50%',
-                    display:'grid', placeItems: 'center',
-                    boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
-                    margin:'10px 10px', cursor: 'pointer', ...navCircleStyle
-                    }}
+                <CircleNav style={navCircleStyle}
                 >
                     <HiOutlineChevronLeft style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
-                </div>
-                <div style={{width: '55px', height: '55px', borderRadius: '50%',
-                    display:'grid', placeItems: 'center',
-                    boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
-                    margin:'10px 10px', cursor: 'pointer', ...navCircleStyle
-                    }}
+                </CircleNav>
+                <CircleNav style={navCircleStyle}
                 >
                     <HiOutlineChevronRight style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
-                </div>
+                </CircleNav>
             </div>
         </div>
     )
 }
+
+
+const CircleNav = styled.div((props) =>(
+    {
+        width: '55px', height: '55px', borderRadius: '50%',
+        display:'grid', placeItems: 'center',
+        boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
+        margin:'10px 10px', cursor: 'pointer',
+        ...props.style
+    }
+))
 
 export default Pokedex

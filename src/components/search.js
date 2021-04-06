@@ -3,45 +3,39 @@ import Tooltip from '@reach/tooltip'
 import "@reach/tooltip/styles.css"
 import {FaSearch} from 'react-icons/fa'
 import styled from 'styled-components'
-import { useContextMenu } from './searchcontext'
+import {SearchMenu} from './pokedex'
+
+
+import {
+    SearchProvider,
+    SearchOpen,
+    SearchContent,
+} from './searchcontext'
 
 
 const Search = () => {
     const [inputValue, setInputValue] = React.useState("")
-    const [, setIsOpen] = useContextMenu()
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(inputValue)
     }
-
     return (
-        <>
-            <form
-                onSubmit={handleSubmit}
-                style={{margin: '20px 10px', position: 'relative', width: '90%'}}
-            >
-                <InputSearch
-                    type="search" placeholder="Rechercher" 
-                    id="search"
-                    type="search"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onClick={() => setIsOpen(true)}
-                    autoComplete="off"
-                />
-                <Tooltip 
-                    label="Recherche"
-                    aria-label="Recherche">
+        <FormSearch
+            onSubmit={handleSubmit}>
+                <SearchProvider>
+                    <SearchOpen>
+                        <InputSearch value={inputValue}
+                         onChange={(e) => setInputValue(e.target.value)} />
+                    </SearchOpen>
+                    <SearchContent>
+                        <SearchMenu />
+                    </SearchContent>
+                </SearchProvider>
+                <Tooltip label="Recherche" aria-label="Recherche">
                     <label htmlFor="search">
-                        <button style={{
-                            background: 'transparent',
-                            border: 'none', position: 'absolute', left: '15px', top: '18px',
-                            zIndex: '500',
-                            color: 'gray', cursor: 'pointer'
-                            
-                            }}>
+                        <SearchButton>
                             <FaSearch/>
-                        </button>
+                        </SearchButton>
                     </label>
                 </Tooltip>
                 {
@@ -51,11 +45,27 @@ const Search = () => {
                         </DeleteInput>
                     )
                 }
-            </form>
-        </>
+        </FormSearch>
     )
 }
 
+const FormSearch = styled.form(
+    {
+        margin: '20px 10px',
+        position: 'absolute', width: '90%',
+        left: '50%', transform: 'translateX(-50%)'
+        
+    }
+)
+
+const SearchButton = styled.button(
+    {
+        background: 'transparent',
+        border: 'none', position: 'absolute', left: '15px', top: '18px',
+        zIndex: '500',
+        color: 'gray', cursor: 'pointer'
+    }
+)
 
 const InputSearch = styled.input`
     width: 100%;
@@ -85,7 +95,6 @@ const DeleteInput = styled.button`
     border: none;
     color: 'white';
     :hover&{
-        ${'' /* background-color: red; */}
         background-Image: linear-gradient(to bottom right, #b13cff,#fd9d52);
         outline: none;
         cursor: pointer;

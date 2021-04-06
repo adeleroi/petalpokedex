@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import pokeballcard from '../image/pokeballcard.png'
 import styled from 'styled-components'
 
@@ -10,17 +9,17 @@ const Foot = () => {
             
         }}
         >
-            <ul style={{display: 'flex', position: 'relative', justifyContent: 'space-between', position: 'relative', padding: '0'}}>
+            <ul style={{display: 'flex', position: 'relative', justifyContent: 'space-between', padding: '0'}}>
                 <li style={{position: 'absolute', left: '0', top: '-40px'}}>
-                    <a href="#haut">
-                        <img src={pokeballcard} width="30px" height="30px"/>
+                    <a href="#root">
+                        <img src={pokeballcard} width="30px" height="30px" alt=""/>
                     </a>
                 </li>
                 <li>
                     <h3 style={{color: 'white'}}>Compagnie</h3>
                     <List>
                         <li style={{color: 'white', listStyle: 'none'}}>À propos</li>
-                        <li style={{color: 'white', listStyle: 'none'}}>Carriere</li>
+                        <li style={{color: 'white', listStyle: 'none'}}>Carrières</li>
                         <li style={{color: 'white', listStyle: 'none'}}>Pourquoi PokÉdex?</li>
                         <li style={{color: 'white', listStyle: 'none'}}>PetalMD</li>
                     </List>
@@ -122,7 +121,7 @@ const Foot = () => {
                 </li>
             </ul>
             <div style={{width: '100%', borderTop: '1px solid white', paddingTop: '10px', paddingBottom: '10px'}}>
-                <span style={{color: 'white'}}>Copyright &copy;	{new Date().getFullYear()}, PokÉdex. Tous droits réservés</span>
+                <CopyRight>Copyright &copy;	{new Date().getFullYear()}, PokÉdex. Tous droits réservés.</CopyRight>
             </div>
         </div>
     )
@@ -132,5 +131,9 @@ const List = styled.ul`
 padding: 0;
 line-height: 25px;
 `
-
+const CopyRight = styled.span`
+background: linear-gradient(to bottom right,#b13cff,#fd9d52);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
 export default Foot

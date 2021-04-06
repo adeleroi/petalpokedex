@@ -30,7 +30,7 @@ const Tilt = ({options, move, p_id, color, capt}) => {
                         backgroundSize: 'cover'
                         }}
                     >
-                    <img src={`https://pokeres.bastionbot.org/images/pokemon/${p_id}.png`} alt="img" width="170px" height="200px"/>
+                    <img src={`https://pokeres.bastionbot.org/images/pokemon/${p_id}.png`} alt="" width="170px" height="200px"/>
                     </div>
                     <div style={{lineHeight: "25px", textAlign: 'center', fontFamily:'Roboto'}}>
                             <h3 style={{margin:"0", backgroundColor: 'rgb(0, 0, 0, .1)',

@@ -1,57 +1,50 @@
 import * as React from 'react'
-import {Dialog as ReachDialog} from '@reach/dialog'
-import styled from 'styled-components'
+import { SearchMenu } from './pokedex'
 
 
-const Dialog = styled(ReachDialog)({
-    // maxWidth: '1150px',
-    // height: '80vh'
-    borderRadius: '3px',
-    paddingBottom: '3.5em',
-    boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.2)',
-    margin: '0vh auto',
-  })
-const MenuContext = React.createContext()
+const SearchContext = React.createContext()
 
-const Menu = (props) => {
+const SearchProvider = (props) => {
     const [isOpen, setIsOpen] = React.useState(false)
-    return <MenuContext.Provider value={[isOpen, setIsOpen]} {...props} />
+    return <SearchContext.Provider value={[isOpen, setIsOpen]} {...props} />
 }
 
-const useContextMenu = () => {
-    const context = React.useContext(MenuContext)
+const useContextSearch = () => {
+    const context = React.useContext(SearchContext)
     if(context === undefined){
         throw Error("UseContextMenu doit etre utilise a l'interieur de Menu")
     }
     return context
 }
 
-const MenuContent = (props) => {
-    const [isOpen, setIsOpen] = React.useContext(MenuContext)
-    const handleDismiss = () => {
-        console.log("isOpen", isOpen)
-        setIsOpen(false)
-        console.log("isOpen", isOpen)
-    }
-    console.log("isOpen normal", isOpen)
+const SearchContent = (props) => {
+    const [isOpen, setIsOpen] = React.useContext(SearchContext)
     return (
-        <ReachDialog isOpen={isOpen} onDismiss={handleDismiss} {...props} aria-label="search"/>
+        <>
+            <SearchMenu isOpen={isOpen} disMiss={() => setIsOpen(false)}/>
+        </>
     )
 }
 
-const MenuOpen = ({children: child}) => {
-    // console.log(child)
-    const [isOpen, setIsOpen] = React.useContext(MenuContext)
-    // const [, setIsOpen] = useContextMenu()
-    return React.cloneElement(child, {
-        onClick: () => setIsOpen(true)
+const SearchOpen = ({children}) => {
+    const [, setIsOpen] = React.useContext(SearchContext)
+    return React.Children.map(children, (child) => {
+        if(child.type.displayName === "styled.input"){
+            return React.cloneElement(child, {
+                onClick: () => setIsOpen(true),
+                type:"search",
+                placeholder:"Rechercher" ,
+                id:"search",
+                autoComplete:"off",
+            })
+        }
     })
 }
 
 
 export {
-    Menu,
-    MenuOpen,
-    MenuContent,
-    useContextMenu
+    SearchProvider,
+    SearchOpen,
+    SearchContent,
+    useContextSearch,
 }
