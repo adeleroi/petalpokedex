@@ -64,7 +64,7 @@ const FilterPanel = styled.div(props => (
         height: '90vh', width: '70vw', backgroundColor: 'white',
         position: 'absolute', left: '50%', transform: 'translateX(-50%)',
         borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px',
-        padding: '0 50px',  zIndex: '3', top: '64px'
+        padding: '0 50px',  zIndex: '3', top: '62px'
     }
 ))
 

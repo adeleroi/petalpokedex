@@ -1,10 +1,9 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import {NavBtn, DemoBtn} from '../lib'
+import {NavBtn} from '../lib'
 
 const HomeHeader = () => {
-    const navBtnStyle = { height: '35px', width: '110px', backgroundColor: 'white' }
     return (
         <header>
             <Hero>
@@ -97,7 +96,6 @@ const ListNav = () => {
 
 
 const Hero = styled.div`
-    ${'' /* background-Image: linear-gradient(0deg, #b13cff, #dd45d3 20%, #fd9d52); */}
     background-Image: linear-gradient(to bottom right, #b13cff,#fd9d52);
     height: 600px;
     width: 100vw;

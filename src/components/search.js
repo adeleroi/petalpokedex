@@ -51,7 +51,7 @@ const Search = () => {
 
 const FormSearch = styled.form(
     {
-        margin: '20px 10px',
+        // margin: '20px 10px',
         position: 'absolute', width: '90%',
         left: '50%', transform: 'translateX(-50%)'
         

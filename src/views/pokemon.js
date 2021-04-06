@@ -4,7 +4,6 @@ import colors from '../utils/colors'
 import styled from 'styled-components'
 import Pokedex from '../components/pokedex'
 import Tilt from '../components/tilt'
-// import Search from '../components/search'
 import {NavList} from './pokemonlist'
 import Foot from '../components/footer'
 
@@ -40,8 +39,9 @@ const Arene = ({areneLeft, areneCenter, areneRight, pokemonType, p_id}) => {
     return (
         <div style={{display: 'grid', placeItems: 'center',
             backgroundImage: `url(https://pokeres.bastionbot.org/images/pokemon/${p_id}.png)`,
-            height: '80vh',
-            backgroundSize: 'cover', backgroundColor: 'steelblue', 
+            height: '600px',
+            backgroundSize: 'cover', backgroundColor: 'steelblue',
+            margin: '80px 0'
         }}>
             <div style={{backgroundColor: colors[pokemonType]}}>
                 <div style={{display: 'flex', borderRadius: '15px'}}>
@@ -101,14 +101,11 @@ const AreneRight = ({data, title}) => {
 }
 
 
-
 const Card = styled.div`
-    ${'' /* background-color: ${({center, right}) => center || right ? 'rgb(0,0,0,.4)': 'none'}; */}
     background-color: rgb(0, 0, 0, .6);
     min-width: 18vw;
     line-height: 35px;
     border: 1px solid #dcdcdc;
-    ${'' /* border-radius: 10px; */}
     padding: 0 10px;
     margin-bottom: 23px;
     border-bottom-left-radius: ${({left}) => left && "15px"};
@@ -128,11 +125,6 @@ const Card = styled.div`
         justify-content: flex-start;
         font-size: 12px;
     }
-    ${'' /* .infos-infos{
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-    } */}
     .card-section{
         display: flex;
         justify-content: space-between;

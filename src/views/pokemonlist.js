@@ -6,7 +6,6 @@ import Pokedex from '../components/pokedex'
 import Foot from '../components/footer'
 
 
-
 const PokemonList = () => {
     return (
         <div>
@@ -20,10 +19,11 @@ const PokemonList = () => {
 export const NavList = () => {
     return (
         <div style={{
-            display: 'flex', width: '100%', position: 'fixed',
-            top: '0px', alignItems: 'center',backgroundColor:'white',
-            zIndex: '100000', height: '8vh'
-            }}
+            display: 'flex', width: '100%',
+            position: 'fixed', alignItems: 'center',
+            backgroundColor:'white', top: '0px', 
+            zIndex: '100000', height: '80px'
+        }}
         >
             <PokeballLogo/>
             <Search/>

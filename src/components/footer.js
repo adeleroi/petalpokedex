@@ -21,7 +21,6 @@ const Foot = () => {
                         <li style={{color: 'white', listStyle: 'none'}}>À propos</li>
                         <li style={{color: 'white', listStyle: 'none'}}>Carrières</li>
                         <li style={{color: 'white', listStyle: 'none'}}>Pourquoi PokÉdex?</li>
-                        <li style={{color: 'white', listStyle: 'none'}}>PetalMD</li>
                     </List>
                 </li>
                 <li>
