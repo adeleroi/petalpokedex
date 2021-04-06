@@ -1,14 +1,19 @@
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-// import Foot from './components/footer'
+import * as React from 'react';
+import { Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchBdData } from './store/actionTypes'
 import Home from './views/home'
 import Pokemon from './views/pokemon'
 import PokemonList from './views/pokemonlist'
-import configureStore from './store/store'
 
-const store= configureStore()
 
-function App() {
+function App({dispatch}) {
+  // le but ici est de recuperer les donnees et les utilisees
+  // pour des suggestions dans le composant SearchMenu
+  React.useEffect(() => {
+    dispatch(fetchBdData())
+  },[dispatch])
+  
   return (
     <div className="App">
         <Switch>
@@ -21,14 +26,9 @@ function App() {
 }
 
 
-const AppProvider = () => {
-  return (
-    <Router>
-      <Provider store={store}>
-        <App/>
-      </Provider>
-    </Router>
-  )
-}
+const mapStateToProps = state => ({
+  pokemonName: state.bdReducer.pokemonName,
+})
 
-export default AppProvider;
+export default connect(mapStateToProps)(App)
+// export default AppProvider;

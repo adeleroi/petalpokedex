@@ -6,6 +6,7 @@ export const BD_BEGIN = "BD_BEGIN";
 export const BD_SUCCESS = "BD_SUCCESS";
 export const BD_ERROR = "BD_ERROR"
 
+const URL = "https://pokeapi.co/api/v2/"
 
 export const requestPokemonData = () => ({
     type: POKEMON_BEGIN,
@@ -43,9 +44,15 @@ export const fetchPokemonData = () => {
 }
 
 export const fetchBdData = symbol => {
+    const url = URL + "pokemon?limit=1118&offset=0"
     return dispatch => {
         dispatch(requestBdData())
-        return fetch()
+        return fetch(url)
+        .then(async x => {
+            const data = await x.json()
+            dispatch(receiveBdData(data.results))
+        })
+        .catch(e => dispatch(requestBdFail(e)))
 
     }
 }

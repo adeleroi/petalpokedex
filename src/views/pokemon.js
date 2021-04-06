@@ -1,14 +1,16 @@
 import * as React from 'react'
 import {useParams} from 'react-router-dom'
+import { connect } from 'react-redux'
 import colors from '../utils/colors'
 import styled from 'styled-components'
 import Pokedex from '../components/pokedex'
 import Tilt from '../components/tilt'
 import {NavList} from './pokemonlist'
 import Foot from '../components/footer'
+import Search from '../components/search'
 
 
-const Pokemon = () => {
+const Pokemon = ({pokemonName}) => {
     // fetch pokemon stat
     // fetch pokemon abilities
     // pass props to Arene to children
@@ -16,7 +18,7 @@ const Pokemon = () => {
     const data = () => ({pow: 'dkjfk', type: 'jadkjf', ability: 'oisjoij', stat: 'addfd', apropos: 'jslkjlkfdj'})
     return (
         <div>
-            <NavList/>
+            <NavList search={<Search pokemonName={pokemonName}/>}/>
             <Arene
                 p_id={id}
                 areneLeft={<AreneLeft p_id={id}/>}
@@ -26,8 +28,8 @@ const Pokemon = () => {
             >
             </Arene>
             <div>
-                <h1 style={{textAlign: 'left', marginLeft: '10px'}}>Suggestions</h1>
-                <Pokedex pokemonType={data.type} number={10} navOff/>
+                <h1 style={{textAlign: 'left', marginLeft: '50px'}}>Suggestions</h1>
+                <Pokedex pokemonType={data.type} number={10} navOff marginTop={{marginTop: '70px'}}/>
             </div>
             <Foot/>
         </div>
@@ -161,5 +163,7 @@ const Card = styled.div`
         color: white;
     }
 `
-
-export default Pokemon
+const mapStateToProps = state => ({
+    pokemonName: state.bdReducer.pokemonName
+})
+export default connect(mapStateToProps)(Pokemon)

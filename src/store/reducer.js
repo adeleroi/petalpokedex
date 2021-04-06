@@ -11,11 +11,12 @@ import {
 const bdInitState = {
     isLoading: false,
     error: null,
-    bdData: null
+    bdData: null,
+    pokemonName: []
 }
 
 const bdReducer = (state = bdInitState, action) => {
-    const {type, error} = action
+    const {type, data, error} = action
     switch(type){
         case BD_BEGIN:
             return {
@@ -25,7 +26,10 @@ const bdReducer = (state = bdInitState, action) => {
         case BD_SUCCESS:
             return {
                 ...state,
-
+                isLoading: false,
+                pokemonName: data.filter(ob => !ob.name.includes('-')).map(
+                    ob => ({name:ob.name, id: ob.url.split('/').slice(-2, -1)[0]})
+                ),
             }
         case BD_ERROR:
             return {
@@ -37,6 +41,8 @@ const bdReducer = (state = bdInitState, action) => {
     }
 
 }
+
+
 
 const pkInitState = { 
     news: null,

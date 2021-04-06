@@ -1,43 +1,37 @@
 import * as React from 'react'
-import Tooltip from '@reach/tooltip'
+// import Tooltip from '@reach/tooltip'
 import "@reach/tooltip/styles.css"
 import {FaSearch} from 'react-icons/fa'
 import styled from 'styled-components'
-import {SearchMenu} from './pokedex'
 
 
 import {
     SearchProvider,
     SearchOpen,
-    SearchContent,
+    SearchFilter,
 } from './searchcontext'
 
 
-const Search = () => {
+const Search = ({pokemonName}) => {
     const [inputValue, setInputValue] = React.useState("")
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(inputValue)
     }
     return (
-        <FormSearch
-            onSubmit={handleSubmit}>
+        <FormSearch onSubmit={handleSubmit}>
                 <SearchProvider>
                     <SearchOpen>
                         <InputSearch value={inputValue}
                          onChange={(e) => setInputValue(e.target.value)} />
                     </SearchOpen>
-                    <SearchContent>
-                        <SearchMenu />
-                    </SearchContent>
+                    <SearchFilter value={inputValue} pokemonName={pokemonName}/>
                 </SearchProvider>
-                <Tooltip label="Recherche" aria-label="Recherche">
-                    <label htmlFor="search">
-                        <SearchButton>
-                            <FaSearch/>
-                        </SearchButton>
-                    </label>
-                </Tooltip>
+                <label htmlFor="search">
+                    <SearchButton>
+                        <FaSearch/>
+                    </SearchButton>
+                </label>
                 {
                     inputValue && (
                         <DeleteInput onClick={() => setInputValue("")}>
@@ -51,7 +45,6 @@ const Search = () => {
 
 const FormSearch = styled.form(
     {
-        // margin: '20px 10px',
         position: 'absolute', width: '90%',
         left: '50%', transform: 'translateX(-50%)'
         
