@@ -6,6 +6,9 @@ import {
     BD_BEGIN,
     BD_ERROR,
     BD_SUCCESS,
+    RC_BEGIN,
+    RC_SUCCESS,
+    RC_ERROR,
 } from './actionTypes'
 
 const bdInitState = {
@@ -45,16 +48,15 @@ const bdReducer = (state = bdInitState, action) => {
 
 
 const pkInitState = { 
-    news: null,
+    // news: null,
     error: null,
-    stockData: null,
-    pokemonData: [], 
+    pokemonData: null, 
     isFetching: false,
 }
 
 const pokemonReducer = (state=pkInitState, action) => {
-
-    switch (action.type){
+    const {data, type, error} = action
+    switch (type){
         case POKEMON_BEGIN:
             return {
                 ...state,
@@ -65,12 +67,12 @@ const pokemonReducer = (state=pkInitState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                stockData: action.data
+                pokemonData: data,
             };
         
         case POKEMON_ERROR:
             return {
-                error: action.error
+                error,
             }
             
         default:
@@ -78,9 +80,43 @@ const pokemonReducer = (state=pkInitState, action) => {
     }
 }
 
+
+
+const rcInitState = {
+    isLoading: false,
+    error: null,
+    // bdData: null,
+    record: null
+}
+
+const rcReducer = (state = rcInitState, action) => {
+    const {type, data, error} = action
+    switch(type){
+        case RC_BEGIN:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case RC_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                record: data
+            }
+        case RC_ERROR:
+            return {
+                ...state,
+                error,
+            }
+        default:
+            return state;
+    }
+
+}
 const rootReducer = combineReducers({
     bdReducer,
-    pokemonReducer
+    pokemonReducer,
+    rcReducer
 })
 
 export default rootReducer

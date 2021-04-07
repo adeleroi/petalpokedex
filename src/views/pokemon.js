@@ -8,20 +8,42 @@ import Tilt from '../components/tilt'
 import {NavList} from './pokemonlist'
 import Foot from '../components/footer'
 import Search from '../components/search'
+import {fetchPokemonRecord} from '../store/actionTypes'
+import {
+    FullPageSpinner,
+    spinner,
+} from '../lib/index'
 
 
-const Pokemon = ({pokemonName}) => {
-    // fetch pokemon stat
-    // fetch pokemon abilities
-    // pass props to Arene to children
+
+const Pokemon = ({
+    pokemonName, record,
+    error, isFetching,
+    dispatch
+}) => {
+
     const {id} = useParams()
-    const data = () => ({pow: 'dkjfk', type: 'jadkjf', ability: 'oisjoij', stat: 'addfd', apropos: 'jslkjlkfdj'})
+    const data = () => ({weight: 'dkjfk', type: 'jadkjf',
+        ability: 'oisjoij', stat: 'addfd', species: 'jslkjlkfdj',
+        habitat: 'erkwek', evolution: 'jjwfkejsk'
+    })
+
+    console.log(record)
+
+    React.useEffect(() => {
+        dispatch(fetchPokemonRecord(id))
+    }, [dispatch, id])
+
+    if(isFetching || !record){
+        return <FullPageSpinner/>
+    }
+
     return (
         <div>
             <NavList search={<Search pokemonName={pokemonName}/>}/>
             <Arene
                 p_id={id}
-                areneLeft={<AreneLeft p_id={id}/>}
+                areneLeft={<AreneLeft data={record.generalInfo}/>}
                 areneCenter={<AreneCenter data={data()} title="Statistiques clés" />}
                 areneRight={<AreneRight data={data()} title="À propos"/>}
                 pokemonType={data.type}
@@ -29,7 +51,7 @@ const Pokemon = ({pokemonName}) => {
             </Arene>
             <div>
                 <h1 style={{textAlign: 'left', marginLeft: '50px'}}>Suggestions</h1>
-                <Pokedex pokemonType={data.type} number={10} navOff marginTop={{marginTop: '70px'}}/>
+                <Pokedex pokemonType={data.type} number={10} marginTop={{marginTop: '70px'}}/>
             </div>
             <Foot/>
         </div>
@@ -41,7 +63,7 @@ const Arene = ({areneLeft, areneCenter, areneRight, pokemonType, p_id}) => {
     return (
         <div style={{display: 'grid', placeItems: 'center',
             backgroundImage: `url(https://pokeres.bastionbot.org/images/pokemon/${p_id}.png)`,
-            height: '600px',
+            height: '750px',
             backgroundSize: 'cover', backgroundColor: 'steelblue',
             margin: '80px 0'
         }}>
@@ -56,10 +78,10 @@ const Arene = ({areneLeft, areneCenter, areneRight, pokemonType, p_id}) => {
     )
 }
 
-const AreneLeft = ({p_id}) => {
+const AreneLeft = ({data}) => {
     return (
-        <Card left>
-            <Tilt p_id={p_id} color="steelblue" move/>
+        <Card left style={{minWidth: '17vw', display: 'grid', placeItems: 'center'}}>
+            <Tilt data={data} color="steelblue" move/>
         </Card>
     )
 }
@@ -105,7 +127,8 @@ const AreneRight = ({data, title}) => {
 
 const Card = styled.div`
     background-color: rgb(0, 0, 0, .6);
-    min-width: 18vw;
+    min-width: 25vw;
+    min-height: 500px;
     line-height: 35px;
     border: 1px solid #dcdcdc;
     padding: 0 10px;
@@ -164,6 +187,9 @@ const Card = styled.div`
     }
 `
 const mapStateToProps = state => ({
-    pokemonName: state.bdReducer.pokemonName
+    pokemonName: state.bdReducer.pokemonName,
+    isFetching: state.rcReducer.isFetching,
+    error: state.rcReducer.error,
+    record: state.rcReducer.record
 })
 export default connect(mapStateToProps)(Pokemon)

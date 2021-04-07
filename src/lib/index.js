@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 const NavBtn = styled.div`
     text-decoration: none;
     width: ${({style}) => style && style.width};
@@ -18,6 +17,34 @@ const NavBtn = styled.div`
     }
 `
 
+const FullPageSpinner = () => {
+    return (
+        <div style={{height: '100vh', display: 'grid', placeItems: 'center'}}>
+            <h2>
+                <span 
+                    className="icon-spinner9">
+                </span>
+                &nbsp; Loading
+            </h2>
+        </div>
+    )
+}
+
+const Spinner = () => {
+    return (
+        <>
+            <h2>
+                <span 
+                    className="icon-spinner9">
+                </span>
+                    &nbsp; Loading
+            </h2>
+        </>
+    )
+}
+
 export {
     NavBtn,
+    FullPageSpinner,
+    Spinner,
 }

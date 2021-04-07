@@ -1,26 +1,26 @@
 import * as React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Tilt from './tilt'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from 'react-icons/hi'
 import styled from 'styled-components'
 
 
-const Pokedex = ({pokemonType, number, marginTop, ...rest}) => {
-    const arr = Array.from({length: number}, (i, v)=> v+1)
-    const captures = Array.from({length: 5}, (i, v) => v + 1)
+const Pokedex = ({
+    number,
+    marginTop,
+    pokemonData,
+    pokemonType,
+    nav,
+    ...rest}) => {
+
     return (
         <div style={{ position:'relative', height: '100%', margin: '160px 0', ...marginTop}}>
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', position: 'relative'}}>
-                <PokedexNav scrollBehavior {...rest}/>
+                {/* <PokedexNav scrollBehavior /> */}
+                {nav}
                 {
-                    arr.map(v => {
-                        if(captures.includes(v)){
-                            return <Tilt p_id={v} color="cadetblue" key={v} capt/>
-                        }
-                        return (
-                                <Tilt p_id={v} color="cadetblue" key={v}/>
-                        )
-                    })
+                    pokemonData &&
+                    pokemonData.summary.map(v => <Tilt color="cadetblue" data={v}  key={`${v.id}-${v.name}`} />)
                 }
             </div>
         </div>
@@ -42,7 +42,7 @@ export const SearchMenu = ({value, disMiss, isOpen, pokemonName, ...rest}) => {
             ) : (!value) ? (
             {height: '60vh'} //hauteur avec sections suggerees
             ) : (
-            {height: '50vh'}) // hauteur avec pokemons suggerees
+            {height: '65vh'}) // hauteur avec pokemons suggerees
     return (
         <>
         {isOpen && (
@@ -85,6 +85,123 @@ export const SearchMenu = ({value, disMiss, isOpen, pokemonName, ...rest}) => {
     )
 }
 
+const Suggestion = ({pk_id, SuggestionType, pokemonCategorie}) => {
+    return (
+        <div style={{paddingLeft: '20px'}}>
+            <h3>{SuggestionType}</h3>
+            <div style={{display: 'flex'}}>
+                <div style={{width: '150px', height: '100px', borderRadius: '15px',
+                    position: 'relative',
+                    margin: '0 20px'
+                }}>
+                    <div style={{
+                            width: '150px', height: '100px',
+                            borderRadius: '15px', backgroundColor: 'rgb(0, 0, 0, .7)',
+                            zIndex: '20', position: 'absolute', top: '0', color: 'white',
+                            display: 'grid', placeItems: 'center', fontSize: '20px'
+                        }}
+                    >
+                    <h3>{pokemonCategorie}</h3>
+                    </div>
+                    <img src={`https://pokeres.bastionbot.org/images/pokemon/${pk_id}.png`}
+                        alt={`${pokemonCategorie}-${pk_id}`} width="150px" height="100px"
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+export const PokedexNav = ({
+    scrollBehavior,navOff,
+    nextPage, previousPage,
+    nextUrl, prevUrl
+}) => {
+    const [offset, setOffset] = React.useState(0)
+
+    React.useEffect(() => {
+        if(!scrollBehavior){
+            return 
+        }
+        window.onscroll = () => {
+            setOffset(window.pageYOffset)
+        }
+        return () => window.removeEventListener('scroll', window.onscroll)
+    })
+
+    const style = offset ? (
+            {position: 'fixed', top:'24%', width: '100%'}
+        ) : (
+            {position: 'fixed', top:'80px'}
+    )
+    
+    const navCircleStyle = !offset ? (
+            {backgroundImage: 'none'}
+        ) : (
+            {backgroundImage: 'linear-gradient(to bottom right, #b13cff,#fd9d52)'}
+    )
+    
+    const disabledLeft = !prevUrl ? {cursor: 'not-allowed', backgroundColor: 'darkgray'} : {cursor: 'pointer'}
+    
+    const disabledRight = !nextUrl ? {cursor: 'not-allowed', backgroundColor: 'darkgray'} : {cursor: 'pointer'}
+    
+    const handleNextPage = nextUrl => {
+        console.log('dispatch next')
+        if(!nextUrl) return
+        nextPage(nextUrl)
+    }
+
+    const handlePreviousPage = prevUrl => {
+        console.log('dispatch prev')
+        if(!prevUrl) return
+        previousPage(prevUrl)
+    }
+
+    if(navOff){
+        return null
+    }
+    return (
+        <div style={style}>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <CircleNavLeft style={navCircleStyle}
+                    disabledLeft={disabledLeft}
+                    onClick={() => handlePreviousPage(prevUrl)}
+                >
+                    <HiOutlineChevronLeft style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
+                </CircleNavLeft>
+                <CircleNavRight style={navCircleStyle}
+                    disabledRight={disabledRight}
+                    onClick={() => handleNextPage(nextUrl)}
+                >
+                    <HiOutlineChevronRight style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
+                </CircleNavRight>
+            </div>
+        </div>
+    )
+}
+
+
+const CircleNavLeft = styled.div(({style, disabledLeft}) =>(
+    {
+        width: '55px', height: '55px', borderRadius: '50%',
+        display:'grid', placeItems: 'center',
+        boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
+        margin:'10px 10px', cursor: 'pointer',
+        ...style, ...disabledLeft
+    }
+))
+
+const CircleNavRight = styled.div(({style, disabledRight}) =>(
+    {
+        width: '55px', height: '55px', borderRadius: '50%',
+        display:'grid', placeItems: 'center',
+        boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
+        margin:'10px 10px', cursor: 'pointer',
+        ...style, ...disabledRight,
+    }
+))
+
 const FilterItem = styled.div({
     display: 'flex',
     alignItems: 'center',
@@ -116,85 +233,6 @@ const FilterPanel = styled.div(props => (
         position: 'absolute', left: '50%', transform: 'translateX(-50%)',
         borderBottomLeftRadius: '15px', borderBottomRightRadius: '15px',
         padding: '10px 0px',  zIndex: '3', top: '62px'
-    }
-))
-
-const Suggestion = ({pk_id, SuggestionType, pokemonCategorie}) => {
-    return (
-        <div style={{paddingLeft: '20px'}}>
-            <h3>{SuggestionType}</h3>
-            <div style={{display: 'flex'}}>
-                <div style={{width: '150px', height: '100px', borderRadius: '15px',
-                    position: 'relative',
-                    margin: '0 20px'
-                }}>
-                    <div style={{
-                            width: '150px', height: '100px',
-                            borderRadius: '15px', backgroundColor: 'rgb(0, 0, 0, .7)',
-                            zIndex: '20', position: 'absolute', top: '0', color: 'white',
-                            display: 'grid', placeItems: 'center', fontSize: '20px'
-                        }}
-                    >
-                    <h3>{pokemonCategorie}</h3>
-                    </div>
-                    <img src={`https://pokeres.bastionbot.org/images/pokemon/${pk_id}.png`}
-                        alt={`${pokemonCategorie}-${pk_id}`} width="150px" height="100px"
-                    />
-                </div>
-            </div>
-        </div>
-    )
-}
-
-
-const PokedexNav = ({navLeft, scrollBehavior, navRight, navOff}) => {
-    const [offset, setOffset] = React.useState(0)
-    React.useEffect(() => {
-        if(!scrollBehavior){
-            return 
-        }
-        window.onscroll = () => {
-            setOffset(window.pageYOffset)
-        }
-    })
-    const style = offset ? (
-            {position: 'fixed', top:'80px', width: '100%'}
-        ) : (
-            {position: 'fixed', top:'80px'}
-        )
-    const navCircleStyle = !offset ? (
-            {backgroundImage: 'none'}
-        ) : (
-            {backgroundImage: 'linear-gradient(to bottom right, #b13cff,#fd9d52)'}
-        )
-    
-    if(navOff){
-        return null
-    }
-    return (
-        <div style={style}>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <CircleNav style={navCircleStyle}
-                >
-                    <HiOutlineChevronLeft style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
-                </CircleNav>
-                <CircleNav style={navCircleStyle}
-                >
-                    <HiOutlineChevronRight style={{width: '45px', height: '45px', color: '#dcdcdc'}}/>
-                </CircleNav>
-            </div>
-        </div>
-    )
-}
-
-
-const CircleNav = styled.div((props) =>(
-    {
-        width: '55px', height: '55px', borderRadius: '50%',
-        display:'grid', placeItems: 'center',
-        boxShadow: '0px 2px 8px rgb(0,0,0,.7)',
-        margin:'10px 10px', cursor: 'pointer',
-        ...props.style
     }
 ))
 

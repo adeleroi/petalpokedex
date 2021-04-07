@@ -3,22 +3,54 @@ import { connect } from 'react-redux'
 import Search from '../components/search'
 import pokeballcard from '../image/pokeballcard.png'
 import { Link } from 'react-router-dom'
-import Pokedex from '../components/pokedex'
+import Pokedex, { PokedexNav } from '../components/pokedex'
 import Foot from '../components/footer'
-// import { SearchMenu } from '../components/pokedex'
+import {fetchPokemonsData} from '../store/actionTypes'
+import {FullPageSpinner} from '../lib/index'
 
-const PokemonList = ({pokemonName}) => {
-    console.log("igname", pokemonName)
+
+const PokemonList = ({
+    pokemonName,
+    // dispatch,
+    isFetching, error,
+    getData,
+    nextPage,
+    previousPage,
+    pokemonData
+}) => {
+
+    React.useEffect(() => {
+        getData()
+    }, [getData])
+    if(isFetching || !pokemonData){
+        return <FullPageSpinner/>
+    }
+    console.log(isFetching, pokemonData)
+
     return (
         <div>
-            <NavList search={<Search pokemonName={pokemonName}/>}/>
-            <Pokedex number={50}/>
+            <NavList search={
+                <Search pokemonName={pokemonName}/>}
+            />
+            <Pokedex 
+                number={50}
+                pokemonData={pokemonData}
+                nav={
+                    <PokedexNav 
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                        prevUrl={pokemonData.previous}
+                        nextUrl={pokemonData.next}
+                        scrollBehavior
+                    />
+                }
+            />
             <Foot/>
         </div>
     )
 }
 
-export const NavList = ({pokemonName, search}) => {
+export const NavList = ({search}) => {
     return (
         <div style={{
             display: 'flex', width: '100%',
@@ -29,7 +61,6 @@ export const NavList = ({pokemonName, search}) => {
         >
             <PokeballLogo/>
             {search}
-            {/* <Search pokemonName={pokemonName}/> */}
         </div>
     )
 }
@@ -47,7 +78,16 @@ export const PokeballLogo = () => {
 }
 
 const mapStateToProps = state => ({
-    pokemonName: state.bdReducer.pokemonName
+    pokemonName: state.bdReducer.pokemonName,
+    isFetching: state.pokemonReducer.isFetching,
+    error: state.pokemonReducer.error,
+    pokemonData: state.pokemonReducer.pokemonData
 })
 
-export default connect(mapStateToProps)(PokemonList)
+const mapDispatchToProps = dispatch => ({
+    getData: () => dispatch(fetchPokemonsData()),
+    nextPage: url => dispatch(fetchPokemonsData(url)),
+    previousPage: url => dispatch(fetchPokemonsData(url))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PokemonList)

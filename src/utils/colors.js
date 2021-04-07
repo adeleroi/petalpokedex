@@ -12,6 +12,7 @@ const pkTypeColors = {
 	bug: '#f8d5a3',
 	dragon: '#97b3e6',
 	psychic: '#eaeda1',
+	ice: '#d9d2e9',
 	fighting: '#E6E0D4',
 }
 

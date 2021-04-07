@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const Foot = () => {
     return (
-        <div style={{height: "40vh", backgroundColor: 'black',
+        <div style={{height: "350px", backgroundColor: 'black',
             padding: '50px 80px', paddingBottom: "0", display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
             
         }}

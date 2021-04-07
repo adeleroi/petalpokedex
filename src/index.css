@@ -17,42 +17,24 @@ code {
 }
 
 
-
-
-/* 
-.infinite-scroll-left.jsx-4{
-  white-space: nowrap;
-  display: flex;
-  animation: 150s linear 0s infinite normal none runningINFINITESCROLLLEFT ;
-}
-
-.infinite-scroll-left.jsx-4 > div.jsx-4{
-  display: flex;
-}
-
-/* .infinite-scroll-left.jsx-4{
-  display: flex;
-} */
-/* @-webkit-keyframes INFINITESCROLLLEFT {
+@keyframes spinner{
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    transform: rotate(0deg);
   }
-  100% {
-    -webkit-transform: translate3d(-1446.40625px, 0, 0);
-    transform: translate3d(-1446.40625px, 0, 0);
+  100%{
+    transform: rotate(359deg)
   }
 }
-@keyframes INFINITESCROLLLEFT {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    -webkit-transform: translate3d(-1446.40625px, 0, 0);
-    transform: translate3d(-1446.40625px, 0, 0);
-  }
-}  */
+
+.icon-spinner9{
+  display: inline-block;
+  background-Image: linear-gradient(to bottom right, #b13cff,#fd9d52);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: spinner 2s linear infinite;
+}
+
+
 /* clears the ‘X’ from Internet Explorer */
 input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
 input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }

@@ -29,10 +29,10 @@ const InfoSection = ({options}) => {
                     Visitez notre collection unique de pokémons rares.
                 </p>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Tilt options={options} move p_id="9" color="wheat" />
-                    <Tilt options={options} move p_id="149" color="cadetblue" />
-                    <Tilt options={options} move p_id="131" color="cornflowerblue" />
-                    <Tilt options={options} move p_id="151" color="orange" />
+                    <Tilt options={options} move data={{type:'water', name: 'Blastoise', id:'9'}} />
+                    <Tilt options={options} move data={{type:'dragon', name: 'Dragonite', id:'149'}} />
+                    <Tilt options={options} move data={{type:'ice', name: 'Lapras', id:'131'}} />
+                    <Tilt options={options} move data={{type:'psychic', name: 'Mew', id:'151'}} />
                 </div>
             </div>
             <div style={{
