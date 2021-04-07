@@ -105,13 +105,13 @@ export const requestRecordFail = (error) => ({
 })
 
 export const fetchPokemonRecord = (id) => {
-    console.log('je dispatch la bonne action')
+    // console.log('je dispatch la bonne action')
     return async dispatch => {
         dispatch(requestRecordData())
         let data
         try {
             data = await BuildPokemonRecord(id)
-            console.log('record data', data)
+            // console.log('record data', data)
             dispatch(receiveRecordData(data))
         } catch (error) {
             dispatch(requestRecordFail(error))
@@ -145,6 +145,7 @@ async function BuildPokemonRecord(id) {
             weight: pokemon?.weight,
             abilities: pokemon?.abilities,
             type: pokemon?.types[0]?.type?.name,
+            type1: pokemon?.types,
             img: pokemon?.sprites?.other?.dream_world?.front_default,
         }
     }
@@ -154,13 +155,15 @@ async function BuildPokemonRecord(id) {
         let result = await fetch(url)
         result = await result.json()
         return {
-            // name: result.name,
+            name: result.name,
             species_name: result.name, //Dragon(Charmander)
             texts: result?.flavor_text_entries.filter(
                 ob => ob?.language?.name === "fr"
             ).map(obj => obj.flavor_text),
             evolution_chain_url: result?.evolution_chain, // url
-            habitat: result?.habitat?.name
+            habitat: result?.habitat?.name,
+            shape: result?.shape?.name,
+            egg_groups: result?.egg_groups // array
         }
     }
 
@@ -175,6 +178,7 @@ async function BuildPokemonRecord(id) {
             evolution2: result?.chain?.evolves_to[0]?.species.name, //charmeleon
             evolution3: result?.chain?.evolves_to[0]?.evolves_to[0].species.name, //charizard
         }
+        // console.log('xxxxxxxxxxxxxx', res.name)
         let evolution = (res.name === data.evolution1) ?
             (data.evolution2) : (res.name === data.evolution2)
             ? (data.evolution3) : null
