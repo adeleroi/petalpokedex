@@ -33,7 +33,7 @@ const FullPageSpinner = () => {
 const Spinner = () => {
     return (
         <>
-            <h2>
+            <h2 style={{color: 'white'}}>
                 <span 
                     className="icon-spinner9">
                 </span>
