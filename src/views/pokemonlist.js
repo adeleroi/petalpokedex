@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Search from '../components/search'
 import pokeballcard from '../image/pokeballcard.png'
@@ -7,6 +8,9 @@ import Pokedex, { PokedexNav } from '../components/pokedex'
 import Foot from '../components/footer'
 import {fetchPokemonsData} from '../store/actionTypes'
 import {FullPageSpinner} from '../lib/index'
+import {BiArrowBack} from 'react-icons/bi'
+import styled from 'styled-components'
+
 
 
 const PokemonList = ({
@@ -50,7 +54,7 @@ const PokemonList = ({
     )
 }
 
-export const NavList = ({search}) => {
+export const NavList = ({search, previousPage}) => {
     return (
         <div style={{
             display: 'flex', width: '100%',
@@ -60,10 +64,38 @@ export const NavList = ({search}) => {
         }}
         >
             <PokeballLogo/>
+            {previousPage}
             {search}
         </div>
     )
 }
+
+export const PreviousPage = () => {
+    const history = useHistory()
+    const handleClick = () => {
+        history.goBack()
+    }
+    return (
+        <>
+            <ArrowBack onClick={handleClick} style={{width: '50px', display:'grid',
+                placeItems: 'center', cursor: 'pointer',
+                fontSize: '25px'    
+            }}>
+                <BiArrowBack/>
+            </ArrowBack>
+        </>
+    )
+}
+
+const ArrowBack = styled.div`
+    :hover&{
+        background-color: lightgray;
+        border-radius: 50%;
+        height: 50px;
+
+    }
+`
+
 
 export const PokeballLogo = () => {
     return (

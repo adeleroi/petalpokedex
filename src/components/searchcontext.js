@@ -17,9 +17,11 @@ const useContextSearch = () => {
     return context
 }
 
-const SearchFilter = ({value, pokemonName}) => {
+const SearchFilter = ({value, pokemonName, isValid}) => {
     const [isOpen, setIsOpen] = React.useContext(SearchContext)
-    return <SearchMenu isOpen={isOpen} disMiss={() => setIsOpen(false)} value={value} pokemonName={pokemonName}/>
+    return <SearchMenu isOpen={isOpen}
+        disMiss={() => setIsOpen(false)} value={value}
+        pokemonName={pokemonName} isValid={isValid}/>
 }
 
 const SearchOpen = ({children}) => {

@@ -1,9 +1,8 @@
 import * as React from 'react'
-// import Tooltip from '@reach/tooltip'
-import "@reach/tooltip/styles.css"
+import {useHistory} from 'react-router-dom'
 import {FaSearch} from 'react-icons/fa'
 import styled from 'styled-components'
-
+import {DeleteInput} from '../lib/index'
 
 import {
     SearchProvider,
@@ -12,20 +11,30 @@ import {
 } from './searchcontext'
 
 
-const Search = ({pokemonName}) => {
+const Search = ({pokemonName, cStyle}) => {
+    const [isValid, setIsValid] = React.useState(true)
     const [inputValue, setInputValue] = React.useState("")
+    const history = useHistory()
+    
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(inputValue)
+        let data = pokemonName.find(val => val === inputValue)
+        if(data !== undefined){
+            history.push(`/pokemon/${data.id}`)
+            return
+        }
+        setIsValid(false)
     }
+
     return (
-        <FormSearch onSubmit={handleSubmit}>
+        <FormSearch onSubmit={handleSubmit} style={cStyle}>
                 <SearchProvider>
                     <SearchOpen>
                         <InputSearch value={inputValue}
                          onChange={(e) => setInputValue(e.target.value)} />
                     </SearchOpen>
-                    <SearchFilter value={inputValue} pokemonName={pokemonName}/>
+                    <SearchFilter value={inputValue} pokemonName={pokemonName} isValid={isValid}/>
                 </SearchProvider>
                 <label htmlFor="search">
                     <SearchButton>
@@ -42,6 +51,7 @@ const Search = ({pokemonName}) => {
         </FormSearch>
     )
 }
+
 
 const FormSearch = styled.form(
     {
@@ -79,22 +89,4 @@ const InputSearch = styled.input`
     }
 
 `
-
-const DeleteInput = styled.button`
-    background: gray;
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    border: none;
-    color: 'white';
-    :hover&{
-        background-Image: linear-gradient(to bottom right, #b13cff,#fd9d52);
-        outline: none;
-        cursor: pointer;
-    }
-    position: absolute;
-    left: 97%;
-    top: 12px;
-`
-
 export default Search

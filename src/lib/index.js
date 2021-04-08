@@ -43,8 +43,27 @@ const Spinner = () => {
     )
 }
 
+const DeleteInput = styled.button`
+    background: gray;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    border: none;
+    color: 'white';
+    :hover&{
+        background-Image: linear-gradient(to bottom right, #b13cff,#fd9d52);
+        outline: none;
+        cursor: pointer;
+    }
+    position: absolute;
+    left: 97%;
+    top: 12px;
+    position: ${({style}) => style && style.position}
+`
+
 export {
     NavBtn,
     FullPageSpinner,
     Spinner,
+    DeleteInput
 }

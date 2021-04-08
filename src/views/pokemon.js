@@ -5,7 +5,7 @@ import colors from '../utils/colors'
 import styled from 'styled-components'
 // import Pokedex from '../components/pokedex'
 import Tilt from '../components/tilt'
-import {NavList} from './pokemonlist'
+import {NavList, PreviousPage} from './pokemonlist'
 import Foot from '../components/footer'
 import Search from '../components/search'
 import {fetchPokemonRecord} from '../store/actionTypes'
@@ -23,12 +23,6 @@ const Pokemon = ({
 }) => {
 
     const {id} = useParams()
-    const data = () => ({weight: 'dkjfk', type: 'jadkjf',
-        ability: 'oisjoij', stat: 'addfd', species: 'jslkjlkfdj',
-        habitat: 'erkwek', evolution: 'jjwfkejsk'
-    })
-
-    console.log(record)
 
     React.useEffect(() => {
         dispatch(fetchPokemonRecord(id))
@@ -40,19 +34,17 @@ const Pokemon = ({
 
     return (
         <div>
-            <NavList search={<Search pokemonName={pokemonName}/>}/>
+            <NavList 
+                search={<Search pokemonName={pokemonName} cStyle={{width: '79%'}}/>}
+                previousPage={<PreviousPage/>} 
+            />
             <Arene
                 p_id={id}
                 areneLeft={<AreneLeft data={record.generalInfo}/>}
                 areneCenter={<AreneCenter data={record} title="Statistiques clés" />}
                 areneRight={<AreneRight data={record.about} title="À propos"/>}
-                pokemonType={data.type}
             >
             </Arene>
-            {/* <div>
-                <h1 style={{textAlign: 'left', marginLeft: '50px'}}>Suggestions</h1>
-                <Pokedex pokemonType={data.type} number={10} marginTop={{marginTop: '70px'}}/>
-            </div> */}
             <Foot/>
         </div>
     )
@@ -107,8 +99,13 @@ const AreneCenter = ({data, title}) => {
                         (!["Habilité", "Type1", "Egg_groups"].includes(key))?(
                             <div className="card-section" key={key}>
                                 <span className="card-key">{key}</span>
-
-                                <span className="card-response">{obj[key]}</span> 
+                                {
+                                    (key === 'Poids')? (
+                                        <span className="card-response">{obj[key]} Kg</span>
+                                    ):(
+                                        <span className="card-response">{obj[key]}</span>
+                                    )
+                                }
 
                             </div>
                         ):(
@@ -119,8 +116,8 @@ const AreneCenter = ({data, title}) => {
                                     obj[key].map(hab => (
                                         <span key={hab} style={{
                                             marginLeft: '15px', fontSize: '15px',
-                                            backgroundColor: (key !== 'Habilité') ? colors[hab]: 'yellow',
-                                            color: (key !== 'Habilité') ? 'inherit': 'black',
+                                            backgroundColor: (!['Habilité', 'Egg_groups'].includes(key)) ? colors[hab]: 'yellow',
+                                            color: 'black',
                                             padding: '5px',
                                             borderRadius: '5px'
                                             
@@ -169,7 +166,7 @@ const Text = styled.p`
 
 const Card = styled.div`
     background-color: rgb(0, 0, 0, .7);
-    min-width: 25vw;
+    min-width: 27vw;
     min-height: 500px;
     line-height: 35px;
     border: 1px solid #dcdcdc;
@@ -220,7 +217,7 @@ const Card = styled.div`
     .card-response{
         margin-left: 5px;
         font-weight: bold;
-        font-size: 15px
+        font-size: 15px;
     }
 
     .card-key{
@@ -238,25 +235,3 @@ const mapStateToProps = state => ({
     record: state.rcReducer.record
 })
 export default connect(mapStateToProps)(Pokemon)
-
-
-// {
-//     (key === 'Type1') ? (
-//         <div>
-//         {
-//             obj[key].map(ob => (
-//                 <span style={{
-//                     backgroundColor: colors[ob.type.name],
-//                     marginLeft: '15px', fontSize: '15px',
-//                     padding: '5px', color: 'black',
-//                     borderRadius: '5px'
-//                 }} key={ob.type.name}>
-//                   {ob.type.name}  
-//                 </span>
-//             ))
-//         }
-//         </div>
-//     ):(
-//         <span className="card-response">{obj[key]}</span> 
-//     )
-// }

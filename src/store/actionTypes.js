@@ -26,7 +26,7 @@ export const requestPokemonFail = (error) => ({
     error,
 })
 
-export const fetchPokemonsData = (urlTo, offset=150, limit=50) => {
+export const fetchPokemonsData = (urlTo, offset=150, limit=15) => {
     
     const url = !urlTo ? BASE_URL + `pokemon?limit=${limit}&offset=${offset}` : urlTo
     console.log(url)
@@ -105,13 +105,11 @@ export const requestRecordFail = (error) => ({
 })
 
 export const fetchPokemonRecord = (id) => {
-    // console.log('je dispatch la bonne action')
     return async dispatch => {
         dispatch(requestRecordData())
         let data
         try {
             data = await BuildPokemonRecord(id)
-            // console.log('record data', data)
             dispatch(receiveRecordData(data))
         } catch (error) {
             dispatch(requestRecordFail(error))
@@ -172,13 +170,11 @@ async function BuildPokemonRecord(id) {
         const url = res?.evolution_chain_url.url
         let result = await fetch(url)
         result = await result.json()
-
         let data =  {
             evolution1: result?.chain?.species.name, //charmander
             evolution2: result?.chain?.evolves_to[0]?.species.name, //charmeleon
-            evolution3: result?.chain?.evolves_to[0]?.evolves_to[0].species.name, //charizard
+            evolution3: result?.chain?.evolves_to[0]?.evolves_to[0]?.species.name, //charizard
         }
-        // console.log('xxxxxxxxxxxxxx', res.name)
         let evolution = (res.name === data.evolution1) ?
             (data.evolution2) : (res.name === data.evolution2)
             ? (data.evolution3) : null
@@ -197,6 +193,5 @@ async function BuildPokemonRecord(id) {
         getAbout(),
         getEvolution()
     ])
-    console.log("generale infos",  generalInfo)
     return { id, generalInfo, about, evolution }
 }

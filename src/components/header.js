@@ -14,19 +14,8 @@ const HomeHeader = () => {
                                 src="https://fontmeme.com/permalink/210402/6f2dbbe930d5f8f71173dcad22fff2f1.png"
                             />
                         </Link>
-                        <div style={{display: 'flex', width: '230px', justifyContent: 'space-between'}}>
-                        <Link to="/pokemonlist" style={{
-                            textDecoration: 'none',  
-                        }}
-                        >
-                            <NavBtn style={{
-                                height: '35px',
-                                width: '110px', backgroundColor: 'white',
-                            }}>
-                                Demo
-                            </NavBtn>
-                        </Link>
-                        <Link to="/pokemonlist" style={{
+                        <div style={{display: 'flex', width: '230px', justifyContent: 'space-between', textAlign: 'flex-end'}}>
+                        {/* <Link to="/pokemonlist" style={{
                             textDecoration: 'none',
                         }}
                         >
@@ -36,6 +25,17 @@ const HomeHeader = () => {
                                 color: 'white'
                             }}>
                                 Log in
+                            </NavBtn>
+                        </Link> */}
+                        <Link to="/pokemonlist" style={{
+                            textDecoration: 'none',  
+                        }}
+                        >
+                            <NavBtn style={{
+                                height: '35px',
+                                width: '110px', backgroundColor: 'white',
+                            }}>
+                                Demo
                             </NavBtn>
                         </Link>
                         </div>

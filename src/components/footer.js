@@ -27,33 +27,33 @@ const Foot = () => {
                     <h3 style={{color: 'white'}}>Produits</h3>
                     <List>
                         <li style={{color: 'white', listStyle: 'none'}}>
-                        <a href="https://www.petalmd.com/fr/xacte-facturation-medicale-fonctionnalites?hsCtaTracking=ae584903-b19b-4eb9-8631-7e752d7c8561%7C511adfe6-83a0-4e9b-84ab-b2868d2880d1" 
+                        <a href="https://www.linkedin.com/in/ange-wilfried/" 
                             style={{textDecoration: 'none', color: 'white'}}
                             target="_blank" rel="noopener noreferrer"
                             >
-                            Xacte
+                            Pokémon Go
                         </a>
                         </li>
                         <li style={{color: 'white', listStyle: 'none'}}>
-                        <a href="https://www.petalmd.com/fr/xacte-facturation-medicale-fonctionnalites?hsCtaTracking=ae584903-b19b-4eb9-8631-7e752d7c8561%7C511adfe6-83a0-4e9b-84ab-b2868d2880d1" 
+                        <a href="https://www.linkedin.com/in/ange-wilfried/" 
                             style={{textDecoration: 'none', color: 'white'}}
                             target="_blank" rel="noopener noreferrer"
                             >
-                            Xacte
+                            Pokémon Or
                         </a>
                         </li>
                         <li style={{color: 'white', listStyle: 'none'}}>
-                        <a href="https://www.petalmd.com/fr/xacte-facturation-medicale-fonctionnalites?hsCtaTracking=ae584903-b19b-4eb9-8631-7e752d7c8561%7C511adfe6-83a0-4e9b-84ab-b2868d2880d1" 
+                        <a href="https://www.linkedin.com/in/ange-wilfried/" 
                             target="_blank" rel="noopener noreferrer"
                             style={{textDecoration: 'none', color: 'white'}}>
-                            Xacte
+                            Pokémon Diamond
                         </a>
                         </li>
                         <li style={{color: 'white', listStyle: 'none'}}>
-                        <a href="https://www.petalmd.com/fr/xacte-facturation-medicale-fonctionnalites?hsCtaTracking=ae584903-b19b-4eb9-8631-7e752d7c8561%7C511adfe6-83a0-4e9b-84ab-b2868d2880d1" 
+                        <a href="https://www.linkedin.com/in/ange-wilfried/" 
                             target="_blank" rel="noopener noreferrer"
                             style={{textDecoration: 'none', color: 'white'}}>
-                            Xacte
+                            Pokémon Sword and Pokémon Shield
                         </a>
                         </li>
                     </List>

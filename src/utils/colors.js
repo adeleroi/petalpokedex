@@ -7,7 +7,7 @@ const pkTypeColors = {
 	water: '#DEF3FD',
 	ground: '#f4e7da',
 	electric: '#FCF7DE',
-    fire: '#f42',
+    fire: '#peachpuff',
 	flying: 'darkkhaki',
 	bug: '#f8d5a3',
 	dragon: '#97b3e6',
