@@ -10,6 +10,11 @@ export const RC_BEGIN = "RC_BEGIN";
 export const RC_SUCCESS = "RC_SUCCESS";
 export const RC_ERROR = "RC_ERROR"
 
+
+export const CP_BEGIN = "CP_BEGIN";
+export const CP_SUCCESS = "CP_SUCCESS";
+export const CP_ERROR = "CP_ERROR"
+
 const BASE_URL = "https://pokeapi.co/api/v2/"
 
 export const requestPokemonData = () => ({
@@ -116,6 +121,46 @@ export const fetchPokemonRecord = (id) => {
         }
     }
 }
+
+
+
+
+
+
+
+
+export const requestCompareData = () => ({
+    type: CP_BEGIN
+})
+
+export const receiveCompareData = (data) => ({
+    type: CP_SUCCESS,
+    data,
+})
+
+export const requestCompareFail = (error) => ({
+    type: CP_ERROR,
+    error,
+})
+
+export const fetchPokemonCompare = (id) => {
+    return async dispatch => {
+        dispatch(requestCompareData())
+        let data
+        try {
+            data = await BuildPokemonRecord(id)
+            dispatch(receiveCompareData(data))
+        } catch (error) {
+            dispatch(requestCompareFail(error))
+        }
+    }
+}
+
+
+
+
+
+
 
 async function getGeneralInfo(data){
     let id = data.url && data.url.split('/').slice(-2, -1)[0]

@@ -8,10 +8,10 @@ import Tilt from '../components/tilt'
 import {NavList, PreviousPage} from './pokemonlist'
 import Foot from '../components/footer'
 import Search from '../components/search'
-import {fetchPokemonRecord} from '../store/actionTypes'
+import Compare from '../components/comparesearch'
+import {fetchPokemonRecord, fetchPokemonCompare} from '../store/actionTypes'
 import {
-    FullPageSpinner,
-    // spinner,
+    FullPageSpinner, Spinner,
 } from '../lib/index'
 
 
@@ -19,18 +19,35 @@ import {
 const Pokemon = ({
     pokemonName, record,
     error, isFetching,
+    cp_data, cp_isLoading, cp_error,
     dispatch
 }) => {
 
+    const [compare, setCompare] = React.useState(false)
+    const [toCompareId, setToCompareId] = React.useState(null)
+
     const {id} = useParams()
 
+    const handleComparison = (id, val) => {
+        setCompare(true)
+        console.log('xxxxx', val, compare)
+        setToCompareId(id)
+    }
     React.useEffect(() => {
+        if(compare){
+            dispatch(fetchPokemonCompare(toCompareId))
+        }
         dispatch(fetchPokemonRecord(id))
-    }, [dispatch, id])
+    }, [dispatch, id, compare, toCompareId])
 
     if(isFetching || !record){
+        console.log('rc')
         return <FullPageSpinner/>
     }
+    // if(cp_isLoading || !cp_data){
+    //     console.log('cp')
+    //     return <FullPageSpinner/>
+    // }
 
     return (
         <div>
@@ -39,10 +56,14 @@ const Pokemon = ({
                 previousPage={<PreviousPage/>} 
             />
             <Arene
+                compare={compare}
                 p_id={id}
                 areneLeft={<AreneLeft data={record.generalInfo}/>}
-                areneCenter={<AreneCenter data={record} title="Statistiques clés" />}
-                areneRight={<AreneRight data={record.about} title="À propos"/>}
+                areneCenter={<AreneCenter data={record} title="Statistiques clés" compare={compare}/>}
+                areneAbout={<AreneAbout data={record.about} title="À propos"/>}
+                areneCenter_cp={<AreneCenter data={cp_data && cp_data} title="Statistiques clés" compare={compare}/>}
+                areneRight={<AreneRight data={cp_data && cp_data.generalInfo}/>}
+                searchCompare={<Compare handleComparison={handleComparison} pokemonName={pokemonName}/>}
             >
             </Arene>
             <Foot/>
@@ -50,20 +71,38 @@ const Pokemon = ({
     )
 }
 
-const Arene = ({areneLeft, areneCenter, areneRight, pokemonType, p_id}) => {
+const Arene = ({areneLeft, areneCenter, areneRight,
+    areneAbout, pokemonType, p_id, 
+    compare, searchCompare,
+    areneCenter_cp,
+}) => {
 
     return (
-        <div style={{display: 'grid', placeItems: 'center',
+        <div style={{display: 'flex', justifyContent: 'center',
             backgroundImage: `url(https://pokeres.bastionbot.org/images/pokemon/${p_id}.png)`,
-            height: '750px',
-            backgroundSize: 'cover', backgroundColor: 'steelblue',
-            margin: '80px 0'
+            height: '950px',
+            backgroundSize: 'cover', backgroundColor: 'brown',
+            margin: '80px 0', paddingTop: '60px',
         }}>
             <div style={{backgroundColor: colors[pokemonType]}}>
-                <div style={{display: 'flex', borderRadius: '15px'}}>
-                    {areneLeft}
-                    {areneCenter}
-                    {areneRight}
+                {
+                 !compare ?(
+                    <div style={{display: 'flex', borderRadius: '15px'}}>
+                        {areneLeft}
+                        {areneCenter}
+                        {areneAbout}
+                    </div>
+                 ):(
+                    <div style={{display: 'flex', borderRadius: '15px'}}>
+                        {areneLeft}
+                        {areneCenter}
+                        {areneCenter_cp}
+                        {areneRight}
+                    </div>
+                 )
+                }
+                <div style={{position: 'relative'}}>
+                    {searchCompare}
                 </div>
             </div>
         </div>
@@ -78,10 +117,24 @@ const AreneLeft = ({data}) => {
     )
 }
 
-const AreneCenter = ({data, title}) => {
+const AreneRight = ({data}) => {
+    if(!data){
+        return <Spinner/>
+    }
+    return (
+        <Card right style={{minWidth: '17vw', display: 'grid', placeItems: 'center'}}>
+            <Tilt data={data} color="steelblue" move/>
+        </Card>
+    )
+}
+
+const AreneCenter = ({data, title, compare}) => {
+    if(!data){
+        return <Spinner/>
+    }
     const obj = {
         // Type: data.generalInfo.type,
-        Type1: data.generalInfo.type1.map(ob => ob.type.name),
+        Type: data.generalInfo.type1.map(ob => ob.type.name),
         Habitat: data.about.habitat,
         Habilité: data.generalInfo.abilities.map(hab => hab.ability.name),
         Poids: data.generalInfo.weight,
@@ -91,12 +144,12 @@ const AreneCenter = ({data, title}) => {
     }
     const keys = Object.keys(obj)
     return (
-        <Card center>
+        <Card center compare={compare}>
             <div className="card-title">{title}</div>
             <div className="card-container">
                 {
                     keys.map(key => (
-                        (!["Habilité", "Type1", "Egg_groups"].includes(key))?(
+                        (!["Habilité", "Type", "Egg_groups"].includes(key))?(
                             <div className="card-section" key={key}>
                                 <span className="card-key">{key}</span>
                                 {
@@ -115,7 +168,7 @@ const AreneCenter = ({data, title}) => {
                                     {
                                     obj[key].map(hab => (
                                         <span key={hab} style={{
-                                            marginLeft: '15px', fontSize: '15px',
+                                            marginLeft: '15px', fontSize: compare ? "11px" : '15px',
                                             backgroundColor: (!['Habilité', 'Egg_groups'].includes(key)) ? colors[hab]: 'yellow',
                                             color: 'black',
                                             padding: '5px',
@@ -136,11 +189,11 @@ const AreneCenter = ({data, title}) => {
     )
 }
 
-const AreneRight = ({data, title}) => {
+const AreneAbout = ({data, title}) => {
     // const keys = Object.keys(data)
     const clean_texts = [...new Set(data.texts)]
     return (
-        <Card right style={{overflowY: 'scroll', height: '500px', borderRadius: '0'}}>
+        <Card style={{overflowY: 'scroll', height: '500px', borderRadius: '0'}}>
             <div className="card-title">{title} de {data.species_name}</div>
             <div className="card-container">
                 {
@@ -166,7 +219,7 @@ const Text = styled.p`
 
 const Card = styled.div`
     background-color: rgb(0, 0, 0, .7);
-    min-width: 27vw;
+    min-width: ${({compare}) => compare? "23vw": "27vw"};
     min-height: 500px;
     line-height: 35px;
     border: 1px solid #dcdcdc;
@@ -217,21 +270,24 @@ const Card = styled.div`
     .card-response{
         margin-left: 5px;
         font-weight: bold;
-        font-size: 15px;
+        font-size: ${({compare}) => compare ? "11px" : "15px"};
     }
 
     .card-key{
         text-align: left;
         font-weight: bold;
         color: gray;
-        font-size: 20px;
+        font-size: ${({compare}) => compare ? "11px" : "20px"};
         color: white;
     }
 `
 const mapStateToProps = state => ({
     pokemonName: state.bdReducer.pokemonName,
-    isFetching: state.rcReducer.isFetching,
+    isFetching: state.rcReducer.isLoading,
     error: state.rcReducer.error,
-    record: state.rcReducer.record
+    record: state.rcReducer.record,
+    cp_data: state.cpReducer.compare,
+    cp_isLoading: state.cpReducer.isLoading,
+    cp_error: state.cpReducer.error,
 })
 export default connect(mapStateToProps)(Pokemon)
