@@ -49,7 +49,7 @@ const HomeHeader = () => {
                         fontSize: '45px', fontWeight: '700',
                         maxWidth: '60vw'
                     }}>
-                        Entrer dans l'univers des pokémons
+                        Entrez dans l'univers des pokémons
                     </h1>
                     <div style={{width: '50vw'}}>
                         <p style={{textAlign: 'center', color: 'white', fontSize: '20px', fontWeight: '300'}}>
