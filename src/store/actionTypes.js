@@ -41,13 +41,14 @@ export const fetchPokemonsData = (urlTo, offset=150, limit=15) => {
         return fetch(url)
         .then(async x => {
             const resultats = await x.json()
-            const {previous, next} = resultats
-            const summary = []
-            for(let data of resultats.results){
-                const res = await getGeneralInfo(data)
-                summary.push(res)
-            }
+            const {previous, next, results} = resultats
+            let summary = await Promise.all(results.map(data => getGeneralInfo(data)))
             const cleanData = {summary, previous, next}
+            // const summary = []
+            // for(let data of resultats.results){
+            //     const res = await getGeneralInfo(data)
+            //     summary.push(res)
+            // }
             dispatch(receivePokemonData(cleanData))
         })
         .catch(e => dispatch(requestPokemonFail(e)))
