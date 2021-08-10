@@ -37,7 +37,7 @@ const Tilt = ({options, move, p_id, color, capt, data}) => {
                         backgroundSize: 'cover'
                         }}
                     >
-                    <img src={`https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`} alt="" width="170px" height="200px"/>
+                    <img src={`https://cdn.traction.one/pokedex/pokemon/${data.id}.png`} alt="" width="170px" height="200px"/>
                     </div>
                     <div style={{lineHeight: "25px", textAlign: 'center', fontFamily:'Roboto'}}>
                             <h3 style={{
